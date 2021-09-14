@@ -26,6 +26,12 @@ class BasePage():
         link.click()
         #alert = self.browser.switch_to.alert
         #alert.accept()
+   
+    def go_to_basket_page(self):
+        basket = self.browser.find_element(*BasePageLocators.BASKET_BUTTON)
+        basket.click()
+        assert "basket" in self.browser.current_url, "Basket unavailable"
+
 
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"  
