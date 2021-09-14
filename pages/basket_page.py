@@ -1,12 +1,11 @@
 from .base_page import BasePage
 from .locators import BasketPageLocators
-import pytest
+from selenium.webdriver.common.by import By
+
 
 class BasketPage(BasePage):
-    def should_not_be_products(self):
-        assert self.is_not_element_present(*BasketPageLocators.EMPTY_BASKET), \
-            "some product is"
+    def should_be_basket_empty_message(self):
+        assert self.is_not_element_present(*BasketPageLocators.EMPTY_BASKET), "Item in basket"
 
-    def basket_should_be_empty(self):
-        assert self.is_element_present(*BasketPageLocators.EMPTY_BASKET_MESSAGE), \
-            "Basket isnt empty"
+    def is_basket_empty(self):
+        assert self.is_element_present(*BasketPageLocators.EMPTY_BASKET_MESSAGE), "Basket is not empty"
