@@ -1,29 +1,30 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
-import time
+import pytest
 
 class ProductPage(BasePage):
-    def should_be_login_page(self):
-        self.should_be_login_url()
-        self.should_be_login_form()
-        self.should_be_register_form()
+    def add_to_cart_page(self):
+        add_btn = self.browser.find_element(*ProductPageLocators.ADD_TO_CART)
+        add_btn.click()
+        #self.solve_quiz_and_get_code()
+        #alert_name_product=self.browser.find_element(*ProductPageLocators.ALERT_PRODUCT_NAME)
+        #return alert_name_product.text
 
-    def guest_can_add_product_to_basket(self):
-        button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET)
-        button.click()
+    def should_add_to_cart_page(self):
+        assert self.is_element_present(*ProductPageLocators.ADD_TO_CART), "Add btn is not presented"
+    def product_name(self):
+        name=self.browser.find_element(*ProductPageLocators.PRODUCT_NAME)
+        return name.text
+    def product_price(self):
+        price=self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE)
+        return price.text
 
-    def guest_can_see_product_name(self):
-        product_name_in_basket = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME_IN_BASKET)
-        product_name_in_store = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME_IN_STORE)
-        time.sleep(1)
-        print(product_name_in_basket.text)
-        print(product_name_in_store.text)
-        assert product_name_in_store.text == product_name_in_basket.text, "Product name is no the same"
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
 
-    def product_price_is_correct(self):
-        product_price_in_basket = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE_BASKET)
-        product_prise_in_store = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE_STORE)
-        print(product_price_in_basket.text)
-        print(product_prise_in_store.text)
-        assert product_prise_in_store.text in product_price_in_basket.text, "Price is wrong"
+    def should_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is not disappeared"
+
 
